@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block css %}
+
+{% endblock css %}
+
+{% block js %}
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-app.js"></script>
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-firestore.js"></script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.2.3/firebase-analytics.js"></script>
+<script>
+    function login() {
+        var firebaseConfig = {
+            apiKey: "AIzaSyDxyyPH47v9OByjv3LG2RfdBJO-A2TVJ1I",
+            authDomain: "django-pro-rest.firebaseapp.com",
+            projectId: "django-pro-rest",
+            storageBucket: "django-pro-rest.appspot.com",
+            messagingSenderId: "589933713970",
+            appId: "1:589933713970:web:5106331b23b2668d82ba2b"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        var provider = new firebase.auth.GoogleAuthProvider();
+
+        console.log("El provider" + provider);
+
+        firebase.auth().signInWithPopup(provider).then(function (result) {
+            var token = result.credential.idToken;
+
+            var user = result.user;
+            console.log(token)
+        }).catch(function (error) {
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            // The email of the user's account used.
+            var email = error.email;
+            // The firebase.auth.AuthCredential type that was used.
+            var credential = error.credential;
+            console.log('=======================');
+            console.log(error);
+
+        });
+
+    }
+</script>
+{% endblock js %}
